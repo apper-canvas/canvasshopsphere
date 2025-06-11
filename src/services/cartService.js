@@ -18,21 +18,37 @@ export const useCart = () => {
     }
   }, []);
 
-  // Load full product details for cart items
+// Load full product details for cart items
   const loadCartProducts = async (cartData) => {
     try {
       const cartWithProducts = await Promise.all(
         cartData.map(async (item) => {
-          const product = await productService.getById(item.productId);
-          return {
-            product,
-            quantity: item.quantity
-          };
+          try {
+            const product = await productService.getById(item.productId);
+            return product ? {
+              product,
+              quantity: item.quantity
+            } : null;
+          } catch (error) {
+            console.warn(`Failed to load product ${item.productId}:`, error);
+            return null;
+          }
         })
       );
-      setCart(cartWithProducts.filter(item => item.product)); // Filter out null products
+      
+      // Filter out null products and log if any products were removed
+      const validCartItems = cartWithProducts.filter(item => item !== null);
+      const removedItemsCount = cartWithProducts.length - validCartItems.length;
+      
+      if (removedItemsCount > 0) {
+        console.info(`Removed ${removedItemsCount} unavailable product(s) from cart`);
+      }
+      
+      setCart(validCartItems);
     } catch (error) {
       console.error('Error loading cart products:', error);
+      // Set empty cart on complete failure to prevent app crash
+      setCart([]);
     }
   };
 
@@ -50,63 +66,93 @@ export const useCart = () => {
     try {
       const product = await productService.getById(productId);
       if (!product) {
-        throw new Error('Product not found');
+        throw new Error('This product is no longer available');
       }
 
-      // Check stock availability
-      if (product.stock !== undefined && product.stock <= 0) {
-        throw new Error('Insufficient stock');
+      // Check stock availability - only if stock property exists and is a number
+      // If no stock property exists, assume product is available
+      const hasStockInfo = typeof product.stock === 'number';
+      const isOutOfStock = hasStockInfo && product.stock <= 0;
+      
+      if (isOutOfStock) {
+        throw new Error('This product is currently out of stock');
       }
 
-      setCart(prevCart => {
-        const existingItem = prevCart.find(item => item.product.id === productId);
-        
-        let newQuantity = quantity;
-        if (existingItem) {
-          newQuantity = existingItem.quantity + quantity;
-        }
+      return new Promise((resolve, reject) => {
+        setCart(prevCart => {
+          try {
+            const existingItem = prevCart.find(item => item.product.id === productId);
+            
+            let newQuantity = quantity;
+            if (existingItem) {
+              newQuantity = existingItem.quantity + quantity;
+            }
 
-        // Check if new quantity exceeds stock
-        if (product.stock !== undefined && newQuantity > product.stock) {
-          throw new Error('Insufficient stock');
-        }
-        
-        let newCart;
-        if (existingItem) {
-          // Update quantity if item already exists
-          newCart = prevCart.map(item =>
-            item.product.id === productId
-              ? { ...item, quantity: newQuantity }
-              : item
-          );
-        } else {
-          // Add new item
-          newCart = [...prevCart, { product, quantity: newQuantity }];
-        }
-        
-        saveCart(newCart);
-        return newCart;
+            // Check if new quantity exceeds available stock
+            if (hasStockInfo && newQuantity > product.stock) {
+              reject(new Error(`Only ${product.stock} items available in stock`));
+              return prevCart;
+            }
+            
+            let newCart;
+            if (existingItem) {
+              // Update quantity if item already exists
+              newCart = prevCart.map(item =>
+                item.product.id === productId
+                  ? { ...item, quantity: newQuantity }
+                  : item
+              );
+            } else {
+              // Add new item
+              newCart = [...prevCart, { product, quantity: newQuantity }];
+            }
+            
+            saveCart(newCart);
+            resolve(newCart);
+            return newCart;
+          } catch (error) {
+            reject(error);
+            return prevCart;
+          }
+        });
       });
     } catch (error) {
+      console.error('Error adding to cart:', error);
       throw error;
     }
   };
 
-  // Update item quantity
+// Update item quantity
   const updateQuantity = async (productId, newQuantity) => {
     if (newQuantity < 1) {
       return removeFromCart(productId);
     }
 
-    setCart(prevCart => {
-      const newCart = prevCart.map(item =>
-        item.product.id === productId
-          ? { ...item, quantity: newQuantity }
-          : item
-      );
-      saveCart(newCart);
-      return newCart;
-    });
+    try {
+      // Verify product still exists and check stock if applicable
+      const product = await productService.getById(productId);
+      if (!product) {
+        throw new Error('This product is no longer available');
+      }
+
+      const hasStockInfo = typeof product.stock === 'number';
+      if (hasStockInfo && newQuantity > product.stock) {
+        throw new Error(`Only ${product.stock} items available in stock`);
+      }
+
+      setCart(prevCart => {
+        const newCart = prevCart.map(item =>
+          item.product.id === productId
+            ? { ...item, quantity: newQuantity }
+            : item
+        );
+        saveCart(newCart);
+        return newCart;
+      });
+    } catch (error) {
+      console.error('Error updating cart quantity:', error);
+      throw error;
+    }
   };
 
   // Remove item from cart
