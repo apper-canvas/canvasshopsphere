@@ -31,30 +31,48 @@ const ProductCatalog = () => {
     { value: 'newest', label: 'Newest First' }
   ];
 
-  // Load initial data
+// Load initial data
   useEffect(() => {
     loadInitialData();
   }, []);
 
-  // Search and filter products when dependencies change
+  // Search and filter products when dependencies change (skip during initial load)
   useEffect(() => {
-    searchProducts();
-  }, [searchQuery, filters]);
+    if (categories.length > 0) { // Only search after initial data is loaded
+      searchProducts();
+    }
+  }, [searchQuery, filters, categories.length]);
 
   const loadInitialData = async () => {
     try {
       setLoading(true);
-      const [categoriesData] = await Promise.all([
-        productService.getCategories()
-      ]);
+      setError(null);
       
+      // Load categories first
+      const categoriesData = await productService.getCategories();
       setCategories(categoriesData || []);
       
-      // Load initial products
-      await searchProducts();
+      // Load initial products directly without calling searchProducts()
+      const initialResult = await productService.searchProducts('', {
+        category: '',
+        sortBy: '',
+        page: 1,
+        limit: 12
+      });
+      
+      setProducts(initialResult?.products || []);
+      setPagination({
+        page: initialResult?.page || 1,
+        total: initialResult?.total || 0,
+        totalPages: initialResult?.totalPages || 0,
+        hasNextPage: initialResult?.hasNextPage || false,
+        hasPrevPage: initialResult?.hasPrevPage || false
+      });
+      
     } catch (err) {
       console.error('Error loading initial data:', err);
       setError('Failed to load product data. Please refresh the page.');
+      setProducts([]);
     } finally {
       setLoading(false);
     }
