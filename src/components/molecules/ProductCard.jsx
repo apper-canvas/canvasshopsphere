@@ -13,16 +13,28 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { addToCart } = useCart();
 
-  const handleAddToCart = async (e) => {
+const handleAddToCart = async (e) => {
     e.preventDefault();
     e.stopPropagation();
+    
+    // Check stock availability
+    if (product.stock !== undefined && product.stock <= 0) {
+      toast.error('This item is currently out of stock');
+      return;
+    }
     
     setIsLoading(true);
     try {
       await addToCart(product.id, 1);
       toast.success(`${product.name} added to cart!`);
     } catch (error) {
-      toast.error('Failed to add item to cart');
+      if (error.message === 'Product not found') {
+        toast.error('This product is no longer available');
+      } else if (error.message === 'Insufficient stock') {
+        toast.error('Sorry, this item is out of stock');
+      } else {
+        toast.error('Failed to add item to cart. Please try again.');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -53,34 +65,32 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
                   {product.brand}
                 </Text>
                 <div className="mt-2">
+<div className="mt-2">
                   <RatingStars rating={product.rating} reviewCount={product.reviewCount} size={14} />
                 </div>
                 <Text className="text-surface-700 mt-2 line-clamp-2">
                   {product.description}
                 </Text>
-              </div>
-              
-              <div className="flex flex-col items-end ml-4">
-                <PriceDisplay price={product.price} className="text-2xl font-bold text-primary" />
                 <Button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleAddToCart}
-                  disabled={isLoading}
+                  disabled={isLoading || (product.stock !== undefined && product.stock <= 0)}
                   className="mt-3 px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 flex items-center space-x-2"
                   icon={ApperIcon}
                   iconSize={16}
                   name={isLoading ? "Loader2" : "ShoppingCart"}
                   classNameOverride={isLoading ? "animate-spin" : ""}
                 >
-                  <span>Add to Cart</span>
+                  <span>
+                    {product.stock !== undefined && product.stock <= 0 ? 'Out of Stock' : 'Add to Cart'}
+                  </span>
                 </Button>
               </div>
             </div>
           </div>
         </Link>
       </motion.div>
-    );
   }
 
   return (
@@ -124,16 +134,17 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
               )}
             </div>
             
-            <Button
+<Button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleAddToCart}
-              disabled={isLoading}
+              disabled={isLoading || (product.stock !== undefined && product.stock <= 0)}
               className="p-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50"
               icon={ApperIcon}
               iconSize={20}
               name={isLoading ? "Loader2" : "ShoppingCart"}
               classNameOverride={isLoading ? "animate-spin" : ""}
+              title={product.stock !== undefined && product.stock <= 0 ? 'Out of Stock' : 'Add to Cart'}
             />
           </div>
         </div>

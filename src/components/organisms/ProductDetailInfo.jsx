@@ -46,27 +46,38 @@ const ProductDetailInfo = ({ product, quantity, onQuantityChange, onAddToCart, a
       </Text>
 
       {/* Quantity & Add to Cart */}
-      <div className="flex items-center space-x-4">
+<div className="flex items-center space-x-4">
         <QuantitySelector 
           quantity={quantity} 
           onDecrease={() => onQuantityChange(Math.max(1, quantity - 1))}
-          onIncrease={() => onQuantityChange(quantity + 1)}
+          onIncrease={() => onQuantityChange(Math.min(product.stock || 999, quantity + 1))}
         />
 
         <Button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={onAddToCart}
-          disabled={addingToCart}
+          disabled={addingToCart || (product.stock !== undefined && product.stock <= 0)}
           className="flex-1 bg-primary text-white py-3 px-6 rounded-lg font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50 flex items-center justify-center space-x-2"
           icon={ApperIcon}
           iconSize={20}
           name={addingToCart ? "Loader2" : "ShoppingCart"}
           classNameOverride={addingToCart ? "animate-spin" : ""}
         >
-          <span>Add to Cart</span>
+          <span>
+            {product.stock !== undefined && product.stock <= 0 ? 'Out of Stock' : 'Add to Cart'}
+          </span>
         </Button>
       </div>
+
+      {/* Stock information */}
+      {product.stock !== undefined && product.stock > 0 && product.stock <= 10 && (
+        <div className="bg-warning/10 border border-warning/20 rounded-lg p-3">
+          <Text className="text-warning text-sm font-medium">
+            Only {product.stock} items left in stock
+          </Text>
+        </div>
+      )}
 
       {/* Product Attributes */}
       {product.attributes && Object.keys(product.attributes).length > 0 && (

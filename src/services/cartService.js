@@ -45,7 +45,7 @@ export const useCart = () => {
     localStorage.setItem('shopsphere_cart', JSON.stringify(cartToSave));
   };
 
-  // Add item to cart
+// Add item to cart
   const addToCart = async (productId, quantity = 1) => {
     try {
       const product = await productService.getById(productId);
@@ -53,20 +53,35 @@ export const useCart = () => {
         throw new Error('Product not found');
       }
 
+      // Check stock availability
+      if (product.stock !== undefined && product.stock <= 0) {
+        throw new Error('Insufficient stock');
+      }
+
       setCart(prevCart => {
         const existingItem = prevCart.find(item => item.product.id === productId);
+        
+        let newQuantity = quantity;
+        if (existingItem) {
+          newQuantity = existingItem.quantity + quantity;
+        }
+
+        // Check if new quantity exceeds stock
+        if (product.stock !== undefined && newQuantity > product.stock) {
+          throw new Error('Insufficient stock');
+        }
         
         let newCart;
         if (existingItem) {
           // Update quantity if item already exists
           newCart = prevCart.map(item =>
             item.product.id === productId
-              ? { ...item, quantity: item.quantity + quantity }
+              ? { ...item, quantity: newQuantity }
               : item
           );
         } else {
           // Add new item
-          newCart = [...prevCart, { product, quantity }];
+          newCart = [...prevCart, { product, quantity: newQuantity }];
         }
         
         saveCart(newCart);

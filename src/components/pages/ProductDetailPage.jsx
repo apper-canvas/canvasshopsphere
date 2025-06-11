@@ -57,13 +57,30 @@ const ProductDetailPage = () => {
     }
   };
 
-  const handleAddToCart = async () => {
+const handleAddToCart = async () => {
+    // Check stock availability
+    if (product.stock !== undefined && product.stock < quantity) {
+      toast.error(`Only ${product.stock} items available in stock`);
+      return;
+    }
+    
+    if (product.stock !== undefined && product.stock <= 0) {
+      toast.error('This item is currently out of stock');
+      return;
+    }
+
     setAddingToCart(true);
     try {
       await addToCart(product.id, quantity);
       toast.success(`${quantity} ${product.name}${quantity > 1 ? 's' : ''} added to cart!`);
     } catch (error) {
-      toast.error('Failed to add item to cart');
+      if (error.message === 'Product not found') {
+        toast.error('This product is no longer available');
+      } else if (error.message === 'Insufficient stock') {
+        toast.error('Sorry, insufficient stock available');
+      } else {
+        toast.error('Failed to add item to cart. Please try again.');
+      }
     } finally {
       setAddingToCart(false);
     }

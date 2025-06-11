@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { toast } from 'react-toastify';
 import SearchBar from '@/components/SearchBar';
 import productService from '@/services/productService';
+import { useCart } from '@/services/cartService';
 import { Loader2, AlertCircle, ShoppingCart } from 'lucide-react';
 
 const ProductCatalog = () => {
@@ -9,6 +11,8 @@ const ProductCatalog = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [addingToCart, setAddingToCart] = useState(new Set());
+  const { addToCart } = useCart();
   const [filters, setFilters] = useState({
     category: '',
     sort: ''
@@ -127,8 +131,42 @@ const ProductCatalog = () => {
     }
   };
 
+const handleAddToCart = async (product, e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (!product.inStock) {
+      toast.error('This item is currently out of stock');
+      return;
+    }
+
+    const productId = product.id;
+    setAddingToCart(prev => new Set(prev).add(productId));
+    
+    try {
+      await addToCart(productId, 1);
+      toast.success(`${product.name} added to cart!`);
+    } catch (error) {
+      if (error.message === 'Product not found') {
+        toast.error('This product is no longer available');
+      } else if (error.message === 'Insufficient stock') {
+        toast.error('Sorry, this item is out of stock');
+      } else {
+        toast.error('Failed to add item to cart. Please try again.');
+      }
+    } finally {
+      setAddingToCart(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(productId);
+        return newSet;
+      });
+    }
+  };
+
   const ProductCard = ({ product }) => {
     if (!product) return null;
+
+    const isAddingToCart = addingToCart.has(product.id);
 
     return (
       <motion.div
@@ -192,14 +230,22 @@ const ProductCatalog = () => {
             </div>
             
             <button
+              onClick={(e) => handleAddToCart(product, e)}
               className="bg-primary text-white px-4 py-2 rounded-md text-sm
                        hover:bg-primary/90 transition-colors duration-200
                        disabled:bg-gray-300 disabled:cursor-not-allowed
                        flex items-center space-x-1"
-              disabled={!product.inStock}
+              disabled={!product.inStock || isAddingToCart}
             >
-              <ShoppingCart className="h-4 w-4" />
-              <span>{product.inStock ? 'Add to Cart' : 'Unavailable'}</span>
+              {isAddingToCart ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <ShoppingCart className="h-4 w-4" />
+              )}
+              <span>
+                {isAddingToCart ? 'Adding...' : 
+                 product.inStock ? 'Add to Cart' : 'Unavailable'}
+              </span>
             </button>
           </div>
         </div>
