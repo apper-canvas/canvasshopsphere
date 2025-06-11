@@ -25,12 +25,43 @@ export const productService = {
     await delay(300);
     const searchTerm = query.toLowerCase();
     return products.filter(p =>
-      p.name.toLowerCase().includes(searchTerm) ||
+p.name.toLowerCase().includes(searchTerm) ||
       p.description.toLowerCase().includes(searchTerm) ||
       p.brand.toLowerCase().includes(searchTerm)
     ).map(p => ({ ...p }));
   },
 
+  async searchSuggestions(query, limit = 8) {
+    await delay(200);
+    const searchTerm = query.toLowerCase();
+    
+    // Score products based on relevance
+    const scoredProducts = products
+      .map(product => {
+        let score = 0;
+        const name = product.name.toLowerCase();
+        const brand = product.brand.toLowerCase();
+        const description = product.description.toLowerCase();
+        
+        // Higher score for exact name matches
+        if (name.startsWith(searchTerm)) score += 10;
+        else if (name.includes(searchTerm)) score += 5;
+        
+        // Brand matches
+        if (brand.startsWith(searchTerm)) score += 8;
+        else if (brand.includes(searchTerm)) score += 3;
+        
+        // Description matches
+        if (description.includes(searchTerm)) score += 1;
+        
+        return score > 0 ? { ...product, relevanceScore: score } : null;
+      })
+      .filter(Boolean)
+      .sort((a, b) => b.relevanceScore - a.relevanceScore)
+      .slice(0, limit);
+    
+    return scoredProducts;
+  },
   async create(productData) {
     await delay(500);
     const newProduct = {

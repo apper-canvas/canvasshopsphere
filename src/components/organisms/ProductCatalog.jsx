@@ -10,7 +10,7 @@ import EmptyState from '@/components/atoms/EmptyState';
 import ErrorState from '@/components/atoms/ErrorState';
 import Text from '@/components/atoms/Text';
 
-const ProductCatalog = () => {
+const ProductCatalog = ({ searchQuery = '' }) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -23,15 +23,13 @@ const ProductCatalog = () => {
     brands: [],
     rating: 0
   });
-
   useEffect(() => {
     loadProducts();
   }, []);
 
-  useEffect(() => {
+useEffect(() => {
     applyFilters();
-  }, [products, filters, sortBy]);
-
+  }, [products, filters, sortBy, searchQuery]);
   const loadProducts = async () => {
     setLoading(true);
     setError(null);
@@ -46,46 +44,53 @@ const ProductCatalog = () => {
     }
   };
 
-  const applyFilters = () => {
+const applyFilters = () => {
     let filtered = [...products];
+
+    // Search filter
+    if (searchQuery) {
+      filtered = filtered.filter(product => 
+        product?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product?.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product?.brand?.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
 
     // Category filter
     if (filters.category) {
       filtered = filtered.filter(product => 
-        product.category.toLowerCase() === filters.category.toLowerCase()
+        product?.category?.toLowerCase() === filters.category.toLowerCase()
       );
     }
-
-    // Price range filter
+// Price range filter
     filtered = filtered.filter(product => 
-      product.price >= filters.priceRange[0] && product.price <= filters.priceRange[1]
+      product?.price >= filters.priceRange[0] && product?.price <= filters.priceRange[1]
     );
 
     // Brand filter
     if (filters.brands.length > 0) {
       filtered = filtered.filter(product => 
-        filters.brands.includes(product.brand)
+        filters.brands.includes(product?.brand)
       );
     }
 
     // Rating filter
     if (filters.rating > 0) {
-      filtered = filtered.filter(product => product.rating >= filters.rating);
+      filtered = filtered.filter(product => product?.rating >= filters.rating);
     }
-
-    // Sorting
+// Sorting
     switch (sortBy) {
       case 'price-low':
-        filtered.sort((a, b) => a.price - b.price);
+        filtered.sort((a, b) => (a?.price || 0) - (b?.price || 0));
         break;
       case 'price-high':
-        filtered.sort((a, b) => b.price - a.price);
+        filtered.sort((a, b) => (b?.price || 0) - (a?.price || 0));
         break;
       case 'rating':
-        filtered.sort((a, b) => b.rating - a.rating);
+        filtered.sort((a, b) => (b?.rating || 0) - (a?.rating || 0));
         break;
       case 'newest':
-        filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        filtered.sort((a, b) => new Date(b?.createdAt || 0) - new Date(a?.createdAt || 0));
         break;
       default:
         // Keep original order for featured
@@ -147,15 +152,15 @@ const ProductCatalog = () => {
           />
         </div>
 
-        {/* Main Content */}
-        <div className="flex-1 min-w-0">
+<div className="flex-1 min-w-0">
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
             <div>
               <Text as="h1" className="text-2xl font-heading font-bold text-surface-900">
-                Products
+                {searchQuery ? `Search Results` : 'Products'}
               </Text>
               <Text className="text-surface-600 mt-1">
+                {searchQuery && `"${searchQuery}" - `}
                 {filteredProducts.length} products found
               </Text>
             </div>
