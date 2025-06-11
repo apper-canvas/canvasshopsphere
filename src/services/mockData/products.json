@@ -1,0 +1,383 @@
+[
+  {
+    "id": "1",
+    "name": "iPhone 15 Pro Max",
+    "price": 1199,
+    "originalPrice": 1299,
+    "discount": 8,
+    "description": "The most advanced iPhone with titanium design, A17 Pro chip, and professional camera system. Features the largest iPhone display ever with ProMotion technology and always-on display.",
+    "images": [
+      "https://images.unsplash.com/photo-1592286161306-c47249c22de2?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=800&h=800&fit=crop&crop=center"
+    ],
+    "category": "Electronics",
+    "brand": "Apple",
+    "rating": 4.8,
+    "reviewCount": 124,
+    "attributes": {
+      "screenSize": "6.7 inches",
+      "storage": "256GB",
+      "color": "Natural Titanium",
+      "connectivity": "5G",
+      "warranty": "1 year"
+    },
+    "createdAt": "2024-01-15T10:30:00Z"
+  },
+  {
+    "id": "2",
+    "name": "Samsung Galaxy S24 Ultra",
+    "price": 1099,
+    "description": "Premium Android smartphone with S Pen, advanced AI features, and exceptional camera capabilities. Perfect for productivity and creativity on the go.",
+    "images": [
+      "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1607936854279-55e8f4bcb12d?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1605236453806-b25e5d5cef04?w=800&h=800&fit=crop&crop=center"
+    ],
+    "category": "Electronics",
+    "brand": "Samsung",
+    "rating": 4.6,
+    "reviewCount": 89,
+    "attributes": {
+      "screenSize": "6.8 inches",
+      "storage": "512GB",
+      "color": "Phantom Black",
+      "connectivity": "5G",
+      "warranty": "1 year"
+    },
+    "createdAt": "2024-01-10T14:20:00Z"
+  },
+  {
+    "id": "3",
+    "name": "Nike Air Max 270",
+    "price": 149,
+    "originalPrice": 179,
+    "discount": 17,
+    "description": "Iconic lifestyle sneakers with the largest Max Air unit ever. Combining comfort, style, and performance for everyday wear.",
+    "images": [
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=800&h=800&fit=crop&crop=center"
+    ],
+    "category": "Fashion",
+    "brand": "Nike",
+    "rating": 4.5,
+    "reviewCount": 256,
+    "attributes": {
+      "size": "US 10",
+      "color": "White/Black",
+      "material": "Synthetic/Textile",
+      "style": "Lifestyle"
+    },
+    "createdAt": "2024-01-08T09:15:00Z"
+  },
+  {
+    "id": "4",
+    "name": "Adidas Ultraboost 22",
+    "price": 189,
+    "description": "Premium running shoes with responsive Boost midsole and Primeknit upper. Engineered for comfort and performance in every step.",
+    "images": [
+      "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=800&h=800&fit=crop&crop=center"
+    ],
+    "category": "Fashion",
+    "brand": "Adidas",
+    "rating": 4.7,
+    "reviewCount": 178,
+    "attributes": {
+      "size": "US 9.5",
+      "color": "Solar Red",
+      "material": "Primeknit",
+      "style": "Running"
+    },
+    "createdAt": "2024-01-05T16:45:00Z"
+  },
+  {
+    "id": "5",
+    "name": "MacBook Pro 16-inch M3",
+    "price": 2499,
+    "description": "Powerful laptop for professionals with M3 chip, stunning Liquid Retina XDR display, and all-day battery life. Perfect for creative work and demanding tasks.",
+    "images": [
+      "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=800&h=800&fit=crop&crop=center"
+    ],
+    "category": "Electronics",
+    "brand": "Apple",
+    "rating": 4.9,
+    "reviewCount": 67,
+    "attributes": {
+      "screenSize": "16 inches",
+      "storage": "512GB SSD",
+      "memory": "16GB",
+      "processor": "M3 Pro",
+      "color": "Space Gray"
+    },
+    "createdAt": "2024-01-12T11:30:00Z"
+  },
+  {
+    "id": "6",
+    "name": "Sony WH-1000XM5",
+    "price": 399,
+    "originalPrice": 449,
+    "discount": 11,
+    "description": "Industry-leading noise canceling headphones with exceptional sound quality and 30-hour battery life. Perfect for travel and everyday listening.",
+    "images": [
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800&h=800&fit=crop&crop=center"
+    ],
+    "category": "Electronics",
+    "brand": "Sony",
+    "rating": 4.8,
+    "reviewCount": 203,
+    "attributes": {
+      "type": "Over-ear",
+      "connectivity": "Bluetooth 5.2",
+      "batteryLife": "30 hours",
+      "noiseCanceling": "Yes",
+      "color": "Black"
+    },
+    "createdAt": "2024-01-18T13:22:00Z"
+  },
+  {
+    "id": "7",
+    "name": "The Psychology of Money",
+    "price": 16,
+    "description": "Timeless lessons on wealth, greed, and happiness. A fascinating exploration of how psychology affects our financial decisions.",
+    "images": [
+      "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&h=800&fit=crop&crop=center"
+    ],
+    "category": "Books",
+    "brand": "Harriman House",
+    "rating": 4.6,
+    "reviewCount": 1247,
+    "attributes": {
+      "author": "Morgan Housel",
+      "pages": "256",
+      "language": "English",
+      "format": "Paperback",
+      "isbn": "9780857197689"
+    },
+    "createdAt": "2024-01-03T08:10:00Z"
+  },
+  {
+    "id": "8",
+    "name": "Atomic Habits",
+    "price": 14,
+    "originalPrice": 18,
+    "discount": 22,
+    "description": "An easy and proven way to build good habits and break bad ones. Transform your life with tiny changes that deliver remarkable results.",
+    "images": [
+      "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1592496431122-2349e0fbc666?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=800&h=800&fit=crop&crop=center"
+    ],
+    "category": "Books",
+    "brand": "Avery",
+    "rating": 4.7,
+    "reviewCount": 2156,
+    "attributes": {
+      "author": "James Clear",
+      "pages": "320",
+      "language": "English",
+      "format": "Hardcover",
+      "isbn": "9780735211292"
+    },
+    "createdAt": "2024-01-01T12:00:00Z"
+  },
+  {
+    "id": "9",
+    "name": "Fenty Beauty Fenty Icon Lipstick",
+    "price": 24,
+    "description": "Velvet-matte lipstick with rich, long-wearing color. Comfortable formula that doesn't dry out lips while delivering bold, beautiful color.",
+    "images": [
+      "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=800&h=800&fit=crop&crop=center"
+    ],
+    "category": "Beauty",
+    "brand": "Fenty Beauty",
+    "rating": 4.4,
+    "reviewCount": 89,
+    "attributes": {
+      "shade": "The MVP",
+      "finish": "Velvet Matte",
+      "size": "3.4g",
+      "crueltyFree": "Yes",
+      "vegan": "Yes"
+    },
+    "createdAt": "2024-01-20T15:45:00Z"
+  },
+  {
+    "id": "10",
+    "name": "Rare Beauty Soft Pinch Liquid Blush",
+    "price": 23,
+    "originalPrice": 26,
+    "discount": 12,
+    "description": "Weightless, long-wearing liquid blush that blends seamlessly for a natural, healthy-looking flush. A little goes a long way.",
+    "images": [
+      "https://images.unsplash.com/photo-1631730486583-4b8d2bf6e60c?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=800&fit=crop&crop=center"
+    ],
+    "category": "Beauty",
+    "brand": "Rare Beauty",
+    "rating": 4.5,
+    "reviewCount": 156,
+    "attributes": {
+      "shade": "Soft Pinch",
+      "type": "Liquid Blush",
+      "size": "15ml",
+      "crueltyFree": "Yes",
+      "vegan": "Yes"
+    },
+    "createdAt": "2024-01-14T10:20:00Z"
+  },
+  {
+    "id": "11",
+    "name": "Dyson V15 Detect Absolute",
+    "price": 749,
+    "originalPrice": 849,
+    "discount": 12,
+    "description": "Powerful cordless vacuum with laser dust detection and intelligent suction. Advanced filtration captures 99.99% of particles as small as 0.3 microns.",
+    "images": [
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1564540574041-2c0a8f7b8354?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1509365465985-25d11c17e812?w=800&h=800&fit=crop&crop=center"
+    ],
+    "category": "Home & Garden",
+    "brand": "Dyson",
+    "rating": 4.6,
+    "reviewCount": 234,
+    "attributes": {
+      "type": "Cordless Stick",
+      "runtime": "60 minutes",
+      "filtration": "HEPA",
+      "weight": "3.1 kg",
+      "warranty": "2 years"
+    },
+    "createdAt": "2024-01-16T14:30:00Z"
+  },
+  {
+    "id": "12",
+    "name": "Instant Pot Pro 8-Quart",
+    "price": 149,
+    "description": "10-in-1 programmable pressure cooker, slow cooker, rice cooker, steamer, sauté pan, yogurt maker, sterilizer, and warmer. Make quick, nutritious meals.",
+    "images": [
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1585515656971-f3b0970a556f?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1572454591674-2739f30d7ae5?w=800&h=800&fit=crop&crop=center"
+    ],
+    "category": "Home & Garden",
+    "brand": "Instant Pot",
+    "rating": 4.7,
+    "reviewCount": 1567,
+    "attributes": {
+      "capacity": "8 Quarts",
+      "functions": "10-in-1",
+      "material": "Stainless Steel",
+      "programs": "28 Smart Programs",
+      "warranty": "1 year"
+    },
+    "createdAt": "2024-01-11T09:45:00Z"
+  },
+  {
+    "id": "13",
+    "name": "Wilson Pro Staff 97 Tennis Racket",
+    "price": 199,
+    "description": "Professional tennis racket used by top players. Perfect balance of power and control for advanced players seeking precision and feel.",
+    "images": [
+      "https://images.unsplash.com/photo-1554068804-50b7b2a0b829?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1622163642998-1ea32b0bbc36?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&h=800&fit=crop&crop=center"
+    ],
+    "category": "Sports",
+    "brand": "Wilson",
+    "rating": 4.8,
+    "reviewCount": 92,
+    "attributes": {
+      "headSize": "97 sq in",
+      "weight": "315g",
+      "stringPattern": "16x19",
+      "gripSize": "4 1/4",
+      "level": "Advanced"
+    },
+    "createdAt": "2024-01-07T16:20:00Z"
+  },
+  {
+    "id": "14",
+    "name": "Yeti Rambler 30oz Tumbler",
+    "price": 39,
+    "originalPrice": 45,
+    "discount": 13,
+    "description": "Insulated stainless steel tumbler that keeps drinks cold for 11+ hours and hot for 5+ hours. Perfect for any adventure or daily commute.",
+    "images": [
+      "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1544966503-7cc5ac882d5d?w=800&h=800&fit=crop&crop=center"
+    ],
+    "category": "Sports",
+    "brand": "Yeti",
+    "rating": 4.9,
+    "reviewCount": 445,
+    "attributes": {
+      "capacity": "30oz",
+      "material": "Stainless Steel",
+      "insulation": "Double Wall",
+      "color": "Navy",
+      "dishwasherSafe": "Yes"
+    },
+    "createdAt": "2024-01-04T12:15:00Z"
+  },
+  {
+    "id": "15",
+    "name": "Canon EOS R6 Mark II",
+    "price": 2499,
+    "description": "Full-frame mirrorless camera with 24.2MP sensor, advanced autofocus, and 4K video recording. Perfect for professional photography and videography.",
+    "images": [
+      "https://images.unsplash.com/photo-1606983340126-99ab4716c7ef?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=800&h=800&fit=crop&crop=center"
+    ],
+    "category": "Electronics",
+    "brand": "Canon",
+    "rating": 4.7,
+    "reviewCount": 78,
+    "attributes": {
+      "sensorType": "Full Frame CMOS",
+      "resolution": "24.2MP",
+      "videoRecording": "4K UHD",
+      "viewfinder": "Electronic",
+      "mount": "RF Mount"
+    },
+    "createdAt": "2024-01-19T11:10:00Z"
+  },
+  {
+    "id": "16",
+    "name": "Levi's 501 Original Fit Jeans",
+    "price": 89,
+    "description": "The original blue jean since 1873. Classic straight fit with button fly and iconic styling. Made with premium denim for lasting quality.",
+    "images": [
+      "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1555689502-c4b22d76c56f?w=800&h=800&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1473013088044-59a5fade3c96?w=800&h=800&fit=crop&crop=center"
+    ],
+    "category": "Fashion",
+    "brand": "Levi's",
+    "rating": 4.3,
+    "reviewCount": 567,
+    "attributes": {
+      "fit": "Original Straight",
+      "size": "32x32",
+      "color": "Dark Wash",
+      "material": "100% Cotton",
+      "closure": "Button Fly"
+    },
+    "createdAt": "2024-01-02T14:25:00Z"
+  }
+]
