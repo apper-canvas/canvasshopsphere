@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Search, Filter, X, ChevronDown } from 'lucide-react';
 
 const SearchBar = ({ 
@@ -15,30 +15,54 @@ const SearchBar = ({
   const [showFilters, setShowFilters] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Debounced search to prevent excessive API calls
+  // Use refs to store latest callback functions without causing re-renders
+  const onSearchRef = useRef(onSearch);
+  const onFilterRef = useRef(onFilter);
+
+  // Update refs when props change
+  useEffect(() => {
+    onSearchRef.current = onSearch;
+  }, [onSearch]);
+
+  useEffect(() => {
+    onFilterRef.current = onFilter;
+  }, [onFilter]);
+
+  // Debounced search to prevent excessive API calls - now with stable reference
   const debouncedSearch = useCallback(
     debounce((term) => {
-      if (onSearch) {
+      if (onSearchRef.current) {
         setIsLoading(true);
-        onSearch(term).finally(() => setIsLoading(false));
+        Promise.resolve(onSearchRef.current(term))
+          .finally(() => setIsLoading(false))
+          .catch((error) => {
+            console.error('Search error:', error);
+            setIsLoading(false);
+          });
       }
     }, 300),
-    [onSearch]
+    [] // Empty dependency array - function is now stable
   );
 
+  // Handle search term changes
   useEffect(() => {
     debouncedSearch(searchTerm);
+    
+    // Cleanup function to cancel pending debounced calls
+    return () => {
+      debouncedSearch.cancel?.();
+    };
   }, [searchTerm, debouncedSearch]);
 
+  // Handle filter changes with stable callback reference
   useEffect(() => {
-    if (onFilter) {
-      onFilter({
+    if (onFilterRef.current) {
+      onFilterRef.current({
         category: selectedCategory,
         sort: selectedSort
       });
     }
-  }, [selectedCategory, selectedSort, onFilter]);
-
+  }, [selectedCategory, selectedSort]); // Removed onFilter from dependencies
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -202,17 +226,30 @@ const SearchBar = ({
   );
 };
 
-// Debounce utility function
+// Enhanced debounce utility function with cancellation support
 function debounce(func, wait) {
   let timeout;
-  return function executedFunction(...args) {
+  
+  const executedFunction = function(...args) {
     const later = () => {
       clearTimeout(timeout);
+      timeout = null;
       func(...args);
     };
+    
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
   };
+  
+  // Add cancel method to clear pending executions
+  executedFunction.cancel = function() {
+    if (timeout) {
+      clearTimeout(timeout);
+      timeout = null;
+    }
+  };
+  
+  return executedFunction;
 }
 
 export default SearchBar;
