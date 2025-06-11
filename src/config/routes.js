@@ -1,10 +1,10 @@
-import Home from '../pages/Home';
-import Shop from '../pages/Shop';
-import ProductDetail from '../pages/ProductDetail';
-import Cart from '../pages/Cart';
-import Checkout from '../pages/Checkout';
-import OrderConfirmation from '../pages/OrderConfirmation';
-import Orders from '../pages/Orders';
+import HomePage from '@/components/pages/HomePage';
+import ShopPage from '@/components/pages/ShopPage';
+import ProductDetailPage from '@/components/pages/ProductDetailPage';
+import CartPage from '@/components/pages/CartPage';
+import CheckoutPage from '@/components/pages/CheckoutPage';
+import OrderConfirmationPage from '@/components/pages/OrderConfirmationPage';
+import OrdersPage from '@/components/pages/OrdersPage';
 
 export const routes = {
   home: {
@@ -12,49 +12,49 @@ export const routes = {
     label: 'Home',
     path: '/home',
     icon: 'Home',
-    component: Home
+component: HomePage
   },
   shop: {
     id: 'shop',
     label: 'Shop',
     path: '/shop',
     icon: 'Store',
-    component: Shop
+component: ShopPage
   },
   product: {
     id: 'product',
     label: 'Product',
     path: '/product/:id',
     icon: 'Package',
-    component: ProductDetail
+component: ProductDetailPage
   },
   cart: {
     id: 'cart',
     label: 'Cart',
     path: '/cart',
     icon: 'ShoppingCart',
-    component: Cart
+component: CartPage
   },
   checkout: {
     id: 'checkout',
     label: 'Checkout',
     path: '/checkout',
     icon: 'CreditCard',
-    component: Checkout
+component: CheckoutPage
   },
   orderConfirmation: {
     id: 'orderConfirmation',
     label: 'Order Confirmation',
     path: '/order-confirmation/:orderId',
     icon: 'CheckCircle',
-    component: OrderConfirmation
+component: OrderConfirmationPage
   },
   orders: {
     id: 'orders',
     label: 'Orders',
     path: '/orders',
     icon: 'Package',
-    component: Orders
+component: OrdersPage
   }
 };
 

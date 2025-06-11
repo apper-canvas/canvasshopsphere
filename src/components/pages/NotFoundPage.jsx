@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import ApperIcon from '../components/ApperIcon';
+import ApperIcon from '@/components/ApperIcon';
+import Button from '@/components/atoms/Button';
+import Text from '@/components/atoms/Text';
 
-const NotFound = () => {
+const NotFoundPage = () => {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4">
       <motion.div
@@ -20,15 +22,15 @@ const NotFound = () => {
           </div>
         </motion.div>
         
-        <h1 className="text-6xl font-heading font-bold text-surface-900 mb-4">
+        <Text as="h1" className="text-6xl font-heading font-bold text-surface-900 mb-4">
           404
-        </h1>
-        <h2 className="text-2xl font-heading font-semibold text-surface-700 mb-4">
+        </Text>
+        <Text as="h2" className="text-2xl font-heading font-semibold text-surface-700 mb-4">
           Page Not Found
-        </h2>
-        <p className="text-surface-600 mb-8">
+        </Text>
+        <Text className="text-surface-600 mb-8">
           The page you're looking for doesn't exist or has been moved.
-        </p>
+        </Text>
         
         <div className="space-y-4">
           <Link
@@ -39,17 +41,19 @@ const NotFound = () => {
             <span>Go to Shop</span>
           </Link>
           
-          <button
+          <Button
             onClick={() => window.history.back()}
             className="inline-flex items-center justify-center w-full px-6 py-3 bg-surface-100 text-surface-900 font-medium rounded-lg hover:bg-surface-200 transition-colors space-x-2"
+            icon={ApperIcon}
+            iconSize={18}
+            name="ArrowLeft"
           >
-            <ApperIcon name="ArrowLeft" size={18} />
             <span>Go Back</span>
-          </button>
+          </Button>
         </div>
       </motion.div>
     </div>
   );
 };
 
-export default NotFound;
+export default NotFoundPage;

@@ -2,8 +2,12 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
-import ApperIcon from './ApperIcon';
-import { useCart } from '../services/cartService';
+import ApperIcon from '@/components/ApperIcon';
+import { useCart } from '@/services/cartService';
+import Button from '@/components/atoms/Button';
+import PriceDisplay from '@/components/atoms/PriceDisplay';
+import RatingStars from '@/components/atoms/RatingStars';
+import Text from '@/components/atoms/Text';
 
 const ProductCard = ({ product, viewMode = 'grid' }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,35 +28,6 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
     }
   };
 
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD'
-    }).format(price);
-  };
-
-  const renderStars = (rating) => {
-    return (
-      <div className="flex items-center space-x-1">
-        {[...Array(5)].map((_, i) => (
-          <ApperIcon
-            key={i}
-            name="Star"
-            size={14}
-            className={
-              i < Math.floor(rating)
-                ? 'text-accent fill-current'
-                : 'text-surface-300'
-            }
-          />
-        ))}
-        <span className="text-sm text-surface-600 ml-1">
-          ({product.reviewCount})
-        </span>
-      </div>
-    );
-  };
-
   if (viewMode === 'list') {
     return (
       <motion.div
@@ -71,38 +46,35 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <h3 className="text-lg font-semibold text-surface-900 truncate">
+                <Text as="h3" className="text-lg font-semibold text-surface-900 truncate">
                   {product.name}
-                </h3>
-                <p className="text-sm text-surface-600 mt-1">
+                </Text>
+                <Text className="text-sm text-surface-600 mt-1">
                   {product.brand}
-                </p>
+                </Text>
                 <div className="mt-2">
-                  {renderStars(product.rating)}
+                  <RatingStars rating={product.rating} reviewCount={product.reviewCount} size={14} />
                 </div>
-                <p className="text-surface-700 mt-2 line-clamp-2">
+                <Text className="text-surface-700 mt-2 line-clamp-2">
                   {product.description}
-                </p>
+                </Text>
               </div>
               
               <div className="flex flex-col items-end ml-4">
-                <div className="text-2xl font-bold text-primary">
-                  {formatPrice(product.price)}
-                </div>
-                <motion.button
+                <PriceDisplay price={product.price} className="text-2xl font-bold text-primary" />
+                <Button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleAddToCart}
                   disabled={isLoading}
                   className="mt-3 px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 flex items-center space-x-2"
+                  icon={ApperIcon}
+                  iconSize={16}
+                  name={isLoading ? "Loader2" : "ShoppingCart"}
+                  classNameOverride={isLoading ? "animate-spin" : ""}
                 >
-                  {isLoading ? (
-                    <ApperIcon name="Loader2" size={16} className="animate-spin" />
-                  ) : (
-                    <ApperIcon name="ShoppingCart" size={16} />
-                  )}
                   <span>Add to Cart</span>
-                </motion.button>
+                </Button>
               </div>
             </div>
           </div>
@@ -132,43 +104,37 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
         
         <div className="p-4">
           <div className="mb-2">
-            <h3 className="text-lg font-semibold text-surface-900 truncate group-hover:text-primary transition-colors">
+            <Text as="h3" className="text-lg font-semibold text-surface-900 truncate group-hover:text-primary transition-colors">
               {product.name}
-            </h3>
-            <p className="text-sm text-surface-600">
+            </Text>
+            <Text className="text-sm text-surface-600">
               {product.brand}
-            </p>
+            </Text>
           </div>
           
           <div className="mb-3">
-            {renderStars(product.rating)}
+            <RatingStars rating={product.rating} reviewCount={product.reviewCount} size={14} />
           </div>
           
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <span className="text-xl font-bold text-primary">
-                {formatPrice(product.price)}
-              </span>
+              <PriceDisplay price={product.price} className="text-xl font-bold text-primary" />
               {product.originalPrice && (
-                <span className="text-sm text-surface-500 line-through">
-                  {formatPrice(product.originalPrice)}
-                </span>
+                <PriceDisplay price={product.originalPrice} className="text-sm text-surface-500 line-through" />
               )}
             </div>
             
-            <motion.button
+            <Button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleAddToCart}
               disabled={isLoading}
               className="p-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50"
-            >
-              {isLoading ? (
-                <ApperIcon name="Loader2" size={20} className="animate-spin" />
-              ) : (
-                <ApperIcon name="ShoppingCart" size={20} />
-              )}
-            </motion.button>
+              icon={ApperIcon}
+              iconSize={20}
+              name={isLoading ? "Loader2" : "ShoppingCart"}
+              classNameOverride={isLoading ? "animate-spin" : ""}
+            />
           </div>
         </div>
       </Link>

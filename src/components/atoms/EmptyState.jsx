@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
-import ApperIcon from './ApperIcon';
+import ApperIcon from '@/components/ApperIcon';
+import Button from '@/components/atoms/Button';
+import Text from '@/components/atoms/Text';
 
 const EmptyState = ({ 
   title = "No items found", 
@@ -24,22 +26,22 @@ const EmptyState = ({
         </div>
       </motion.div>
       
-      <h3 className="text-xl font-heading font-semibold text-surface-900 mb-2">
+      <Text as="h3" className="text-xl font-heading font-semibold text-surface-900 mb-2">
         {title}
-      </h3>
-      <p className="text-surface-600 mb-6 max-w-md">
+      </Text>
+      <Text className="text-surface-600 mb-6 max-w-md">
         {description}
-      </p>
+      </Text>
       
       {onAction && (
-        <motion.button
+        <Button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={onAction}
           className="px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors"
         >
           {actionLabel}
-        </motion.button>
+        </Button>
       )}
     </motion.div>
   );

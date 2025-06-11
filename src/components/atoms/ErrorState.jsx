@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
-import ApperIcon from './ApperIcon';
+import ApperIcon from '@/components/ApperIcon';
+import Button from '@/components/atoms/Button';
+import Text from '@/components/atoms/Text';
 
 const ErrorState = ({ 
   message = "Something went wrong", 
@@ -16,23 +18,25 @@ const ErrorState = ({
         <ApperIcon name="AlertCircle" size={40} className="text-error" />
       </div>
       
-      <h3 className="text-xl font-heading font-semibold text-surface-900 mb-2">
+      <Text as="h3" className="text-xl font-heading font-semibold text-surface-900 mb-2">
         {title}
-      </h3>
-      <p className="text-surface-600 mb-6 max-w-md">
+      </Text>
+      <Text className="text-surface-600 mb-6 max-w-md">
         {message}
-      </p>
+      </Text>
       
       {onRetry && (
-        <motion.button
+        <Button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={onRetry}
           className="px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors flex items-center space-x-2"
+          icon={ApperIcon}
+          iconSize={18}
+          name="RefreshCw"
         >
-          <ApperIcon name="RefreshCw" size={18} />
-          <span>Try Again</span>
-        </motion.button>
+          Try Again
+        </Button>
       )}
     </motion.div>
   );

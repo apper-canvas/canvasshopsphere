@@ -3,7 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import { AnimatePresence } from 'framer-motion';
 import Layout from './Layout';
 import { routes, routeArray } from './config/routes';
-import NotFound from './pages/NotFound';
+import NotFoundPage from '@/components/pages/NotFoundPage';
 
 function App() {
   return (

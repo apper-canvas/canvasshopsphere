@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
-import ApperIcon from './ApperIcon';
-import { productService } from '../services/api/productService';
-import ProductCard from './ProductCard';
-import ProductFilters from './ProductFilters';
-import SkeletonLoader from './SkeletonLoader';
-import EmptyState from './EmptyState';
-import ErrorState from './ErrorState';
+import ApperIcon from '@/components/ApperIcon';
+import { productService } from '@/services/api/productService';
+import ProductCard from '@/components/molecules/ProductCard';
+import ProductFilters from '@/components/organisms/ProductFilters';
+import SkeletonLoader from '@/components/atoms/SkeletonLoader';
+import EmptyState from '@/components/atoms/EmptyState';
+import ErrorState from '@/components/atoms/ErrorState';
+import Text from '@/components/atoms/Text';
 
-const MainFeature = () => {
+const ProductCatalog = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -151,12 +152,12 @@ const MainFeature = () => {
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
             <div>
-              <h1 className="text-2xl font-heading font-bold text-surface-900">
+              <Text as="h1" className="text-2xl font-heading font-bold text-surface-900">
                 Products
-              </h1>
-              <p className="text-surface-600 mt-1">
+              </Text>
+              <Text className="text-surface-600 mt-1">
                 {filteredProducts.length} products found
-              </p>
+              </Text>
             </div>
 
             <div className="flex items-center space-x-4 mt-4 sm:mt-0">
@@ -238,4 +239,4 @@ const MainFeature = () => {
   );
 };
 
-export default MainFeature;
+export default ProductCatalog;

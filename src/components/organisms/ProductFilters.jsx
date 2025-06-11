@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import ApperIcon from './ApperIcon';
+import ApperIcon from '@/components/ApperIcon';
+import Input from '@/components/atoms/Input';
+import Button from '@/components/atoms/Button';
+import Text from '@/components/atoms/Text';
+import RatingStars from '@/components/atoms/RatingStars';
 
 const ProductFilters = ({ filters, onFilterChange, onClearFilters, productsCount }) => {
   const [expandedSections, setExpandedSections] = useState({
@@ -71,32 +75,13 @@ const ProductFilters = ({ filters, onFilterChange, onClearFilters, productsCount
     });
   };
 
-  const renderStars = (rating) => {
-    return (
-      <div className="flex items-center space-x-1">
-        {[...Array(5)].map((_, i) => (
-          <ApperIcon
-            key={i}
-            name="Star"
-            size={14}
-            className={
-              i < rating
-                ? 'text-accent fill-current'
-                : 'text-surface-300'
-            }
-          />
-        ))}
-      </div>
-    );
-  };
-
   const FilterSection = ({ title, isExpanded, onToggle, children }) => (
     <div className="border-b border-surface-200 last:border-b-0">
-      <button
+      <Button
         onClick={onToggle}
         className="w-full flex items-center justify-between py-4 text-left"
       >
-        <h3 className="font-semibold text-surface-900">{title}</h3>
+        <Text as="h3" className="font-semibold text-surface-900">{title}</Text>
         <ApperIcon
           name="ChevronDown"
           size={18}
@@ -104,7 +89,7 @@ const ProductFilters = ({ filters, onFilterChange, onClearFilters, productsCount
             isExpanded ? 'rotate-180' : ''
           }`}
         />
-      </button>
+      </Button>
       <AnimatePresence>
         {isExpanded && (
           <motion.div
@@ -125,19 +110,19 @@ const ProductFilters = ({ filters, onFilterChange, onClearFilters, productsCount
     <div className="bg-white rounded-xl border border-surface-200 sticky top-24">
       <div className="p-4 border-b border-surface-200">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-heading font-semibold text-surface-900">
+          <Text as="h2" className="text-lg font-heading font-semibold text-surface-900">
             Filters
-          </h2>
-          <button
+          </Text>
+          <Button
             onClick={onClearFilters}
             className="text-sm text-primary hover:text-primary/80 font-medium"
           >
             Clear All
-          </button>
+          </Button>
         </div>
-        <p className="text-sm text-surface-600 mt-1">
+        <Text className="text-sm text-surface-600 mt-1">
           {productsCount} products
-        </p>
+        </Text>
       </div>
 
       <div className="p-4 space-y-0">
@@ -160,9 +145,9 @@ const ProductFilters = ({ filters, onFilterChange, onClearFilters, productsCount
                   onChange={() => handleCategoryChange(category)}
                   className="w-4 h-4 text-primary focus:ring-primary"
                 />
-                <span className="text-sm text-surface-700 group-hover:text-surface-900">
+                <Text as="span" className="text-sm text-surface-700 group-hover:text-surface-900">
                   {category}
-                </span>
+                </Text>
               </label>
             ))}
           </div>
@@ -177,8 +162,8 @@ const ProductFilters = ({ filters, onFilterChange, onClearFilters, productsCount
           <div className="space-y-4">
             <div className="flex items-center space-x-4">
               <div className="flex-1">
-                <label className="block text-xs text-surface-600 mb-1">Min</label>
-                <input
+                <Text as="label" className="block text-xs text-surface-600 mb-1">Min</Text>
+                <Input
                   type="number"
                   value={filters.priceRange[0]}
                   onChange={(e) => handlePriceChange(e.target.value, 0)}
@@ -187,8 +172,8 @@ const ProductFilters = ({ filters, onFilterChange, onClearFilters, productsCount
                 />
               </div>
               <div className="flex-1">
-                <label className="block text-xs text-surface-600 mb-1">Max</label>
-                <input
+                <Text as="label" className="block text-xs text-surface-600 mb-1">Max</Text>
+                <Input
                   type="number"
                   value={filters.priceRange[1]}
                   onChange={(e) => handlePriceChange(e.target.value, 1)}
@@ -197,9 +182,9 @@ const ProductFilters = ({ filters, onFilterChange, onClearFilters, productsCount
                 />
               </div>
             </div>
-            <div className="text-sm text-surface-600">
+            <Text className="text-sm text-surface-600">
               ${filters.priceRange[0]} - ${filters.priceRange[1]}
-            </div>
+            </Text>
           </div>
         </FilterSection>
 
@@ -221,9 +206,9 @@ const ProductFilters = ({ filters, onFilterChange, onClearFilters, productsCount
                   onChange={() => handleBrandChange(brand)}
                   className="w-4 h-4 text-primary focus:ring-primary rounded"
                 />
-                <span className="text-sm text-surface-700 group-hover:text-surface-900">
+                <Text as="span" className="text-sm text-surface-700 group-hover:text-surface-900">
                   {brand}
-                </span>
+                </Text>
               </label>
             ))}
           </div>
@@ -249,8 +234,8 @@ const ProductFilters = ({ filters, onFilterChange, onClearFilters, productsCount
                   className="w-4 h-4 text-primary focus:ring-primary"
                 />
                 <div className="flex items-center space-x-2">
-                  {renderStars(rating)}
-                  <span className="text-sm text-surface-700">& up</span>
+                  <RatingStars rating={rating} size={14} />
+                  <Text as="span" className="text-sm text-surface-700">& up</Text>
                 </div>
               </label>
             ))}
